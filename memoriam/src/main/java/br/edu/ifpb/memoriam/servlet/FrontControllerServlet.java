@@ -45,5 +45,45 @@ public class FrontControllerServlet extends HttpServlet {
 		RequestDispatcher dispatcher= request.getRequestDispatcher(proxPagina);
 		dispatcher.forward(request, response);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		this.getServletContext().removeAttribute("msgs");
+		String operacao= request.getParameter("op");
+		if(operacao== null) {
+			this.getServletContext().setAttribute("msgs", new String[]{"Operação (op) não especificada na requisição!"});
+			response.sendRedirect(request.getHeader("Referer"));
+			return;
+		}
+		ContatoController contatoCtrl= new ContatoController();
+		Resultado resultado= null;
+		String paginaSucesso= "controller.do?op=conctt";
+		String paginaErro= "contato/cadastro.jsp";
+		String proxPagina= null;
+		
+		switch(operacao) {
+			case"cadctt":
+				resultado= contatoCtrl.cadastrar(request.getParameterMap());
+				if(!resultado.isErro()) {proxPagina= paginaSucesso;
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+				} else{
+					request.setAttribute("contato", (Contato) resultado.getEntitade());
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					proxPagina= paginaErro;
+				}
+			break;
+			default:
+				request.setAttribute("erro", "Operação não especificada no servlet!");
+				proxPagina= "../erro/erro.jsp";
+		}
+		
+		if(resultado.isErro()){
+				RequestDispatcher dispatcher= request.getRequestDispatcher(proxPagina);
+				dispatcher.forward(request, response);
+		}else{
+			response.sendRedirect(proxPagina);
+		}
+	}
 
 }
