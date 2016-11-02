@@ -9,7 +9,7 @@
 <link href="${pageContext.request.contextPath}/assets/css/memoriam.css" rel="stylesheet">
 </head>
 <body>
-	<divclass="container">
+	<div class="container">
 		<div class="jumbotron">
 			<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
 			<table>
@@ -21,8 +21,8 @@
 				</tr>
 				<c:forEach var="contato" items="${contatos}">
 					<tr align="left">
-						<td><inputtype="checkbox"/></td><td>${contato.nome}</td>
-						<td><a href="controller.do?op=edtctt&id=${contato.id}">${contato.nome}</a></td>
+						<td><input type="checkbox"/></td><td>${contato.nome}</td>
+						<td><a href="controller.do?op=edtctt&id=${contato.id}">${contato.fone}</a></td>
 						<td>${contato.operadora.nome}</td>
 					</tr>
 				</c:forEach>
