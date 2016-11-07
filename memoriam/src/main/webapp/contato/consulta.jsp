@@ -21,8 +21,8 @@
 				</tr>
 				<c:forEach var="contato" items="${contatos}">
 					<tr align="left">
-						<td><input type="checkbox"/></td><td>${contato.nome}</td>
-						<td><a href="controller.do?op=edtctt&id=${contato.id}">${contato.fone}</a></td>
+						<td><input type="checkbox"/></td><td><a href="controller.do?op=bcsctt&id=${contato.id}">${contato.nome}</a></td>
+						<td>${contato.fone}</td>
 						<td>${contato.operadora.nome}</td>
 					</tr>
 				</c:forEach>

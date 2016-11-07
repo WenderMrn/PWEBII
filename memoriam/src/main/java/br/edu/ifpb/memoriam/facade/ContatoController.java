@@ -50,27 +50,89 @@ public class ContatoController {
 		return resultado;
 	}
 	
+	public Resultado buscar(Map<String, String[]> parametros){
+		Resultado resultado= new Resultado();
+		isParametrosValidos(parametros);
+		
+		if(this.contato.getId() != null) {
+			
+			ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
+			if(this.contato.getId() != null) {
+				dao.beginTransaction();
+				Contato c = dao.find(this.contato.getId());
+				if(c!= null){
+					this.contato.setNome(c.getNome());
+					this.contato.setFone(c.getFone());
+					this.contato.setDataAniversario(c.getDataAniversario());
+				}
+				dao.commit();
+				resultado.setErro(false);
+				resultado.setEntitade(this.contato);
+			}else{
+				resultado.setErro(true);
+				resultado.setMensagensErro(Collections.singletonList("Contato não encontrado!"));
+			}			
+				
+		}else{
+		
+			resultado.setErro(true);
+			resultado.setMensagensErro(this.mensagensErro);
+		}
+		return resultado;
+	}
+	
+	public Resultado editar(Map<String, String[]> parametros){
+		Resultado resultado= new Resultado();
+		String[] id =  parametros.get("id");
+		if(id != null && id.length > 0 && !id[0].isEmpty()) {
+			ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
+			
+				if(this.contato.getId() != null) {
+					dao.beginTransaction();
+					 Contato c = dao.find(this.contato.getId());
+					if(isParametrosValidos(parametros)){
+						c.setNome(this.contato.getNome());
+						c.setFone(this.contato.getFone());
+						c.setDataAniversario(this.contato.getDataAniversario());
+						dao.update(c);
+					}
+					dao.commit();
+					resultado.setErro(false);
+					resultado.setMensagensErro(Collections.singletonList("Contato alterado com sucesso"));
+				}else{
+					resultado.setErro(true);
+					resultado.setMensagensErro(Collections.singletonList("Contato não encontrado!"));
+				}			
+						
+		}else{
+			resultado.setEntitade(this.contato);
+			resultado.setErro(true);
+			resultado.setMensagensErro(this.mensagensErro);
+		}
+		return resultado;
+	}
 	public boolean isParametrosValidos(Map<String, String[]> parametros){
 		// nomes dos parâmetros vêm dos atributos 'name' das tags HTML do formulário
 		String[] id = parametros.get("id");
 		String[] nome = parametros.get("nome");
 		String[] fone = parametros.get("fone");
 		String[] dataAniv = parametros.get("dataaniv");
+		String[] idOperadora = parametros.get("operadora");
 		
-		this.contato= new Contato();
+		this.contato = new Contato();
 		this.mensagensErro= new ArrayList<String>();
 		
-		if(id!= null&& id.length>0 && !id[0].isEmpty()) {
+		if(id != null && id.length > 0 && !id[0].isEmpty()) {
 			contato.setId(Integer.parseInt(id[0]));
 		}
 		
-		if(nome== null|| nome.length== 0 || nome[0].isEmpty()) {
+		if(nome == null|| nome.length == 0 || nome[0].isEmpty()) {
 			this.mensagensErro.add("Nome é campo obrigatório!");
 		} else{
 			contato.setNome(nome[0]);
 		}
 		
-		if(fone== null|| fone.length== 0 || fone[0].isEmpty()) {
+		if(fone == null|| fone.length == 0 || fone[0].isEmpty()) {
 			this.mensagensErro.add("Fone é campo obrigatório!");
 		} else{
 			contato.setFone(fone[0]);
@@ -85,7 +147,7 @@ public class ContatoController {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					sdf.setLenient(false);
 					Date dataIni = sdf.parse(dataAniv[0]);
-					contato.setDataAniversario(dataIni);
+					this.contato.setDataAniversario(dataIni);
 				} catch(ParseException e) {
 					this.mensagensErro.add("Data inválida para a data de aniversário!");
 				}
@@ -97,10 +159,9 @@ public class ContatoController {
 		
 		// Recupera a operadora selecionada, a partir do seu id
 		Operadora operadora= null;
-		String idOperadora = parametros.get("operadora")[0];
-		if(idOperadora!= null && !idOperadora.isEmpty()) {
+		if(idOperadora != null && idOperadora[0].isEmpty()) {
 			OperadoraDAO opDao = new OperadoraDAO(PersistenceUtil.getCurrentEntityManager());
-			operadora= opDao.find(Integer.parseInt(idOperadora));
+			operadora= opDao.find(Integer.parseInt(idOperadora[0]));
 		}
 		
 		contato.setOperadora(operadora);

@@ -22,7 +22,10 @@ public class FrontControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		ContatoController contatoCtrl = new ContatoController();
 		
+		Resultado resultado= null;
 		String proxPagina= null;
+		String paginaErro= "controller.do?op=bcsctt";
+		String paginaBuscar= "controller.do?op=bcsctt";
 		
 		this.getServletContext().removeAttribute("msgs");
 		
@@ -41,6 +44,19 @@ public class FrontControllerServlet extends HttpServlet {
 				request.setAttribute("contatos", contatos);
 				proxPagina= "contato/consulta.jsp";
 			break;
+			case "bcsctt":
+				resultado= contatoCtrl.buscar(request.getParameterMap());
+				if(!resultado.isErro()) {
+					proxPagina = "contato/cadastro.jsp";
+					request.setAttribute("contato", (Contato) resultado.getEntitade());
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+				} else{
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					proxPagina= paginaErro;
+				}
+			break;	
+			default:
+				proxPagina= "../index.jsp";
 			
 		}
 		
@@ -65,9 +81,9 @@ public class FrontControllerServlet extends HttpServlet {
 		String proxPagina= null;
 		
 		switch(operacao) {
-			case"cadctt":
+			case "cadctt":
 				resultado= contatoCtrl.cadastrar(request.getParameterMap());
-				if(!resultado.isErro()) {proxPagina= paginaSucesso;
+				if(!resultado.isErro()) {proxPagina = paginaSucesso;
 					request.setAttribute("msgs", resultado.getMensagensSucesso());
 				} else{
 					request.setAttribute("contato", (Contato) resultado.getEntitade());

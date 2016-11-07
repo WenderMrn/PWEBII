@@ -25,11 +25,11 @@
 					</div>
 				</div>
 			</c:if>
-			<form action="${pageContext.request.contextPath}/controller.do" method="POST"class="form-horizontal">
+			<form action="${pageContext.request.contextPath}/controller.do" method="POST" class="form-horizontal">
 				<input type="hidden"name="op" value="cadctt">
-				<input id="nome" value="${contato.nome}" name="nome"type="text" class="form-control" placeholder="Nome"/>
-				<input id="fone" value="${contato.fone}"name="fone"class="form-control" type="text" placeholder="Fone"/>
-				<fmt:formatDate var="dataAniv" value="${contato.dataAniversario}" pattern="yyyy-MM-dd"/>
+				<input id="nome" value="${requestScope.contato.nome}" name="nome"type="text" class="form-control" placeholder="Nome"/>
+				<input id="fone" value="${requestScope.contato.fone}"name="fone"class="form-control" type="text" placeholder="Fone"/>
+				<fmt:formatDate var="dataAniv" value="${requestScope.contato.dataAniversario}" pattern="yyyy-MM-dd"/>
 				<input id="dataaniv" value="${dataAniv}" name="dataaniv" class="form-control" type="date" placeholder="Data de criação (dd/mm/aaaa)"/>
 				<select class="form-control" id="operadora" name="operadora">
 					<option value="${null}" label="Selecione a operadora">Selecione a operadora</option>
