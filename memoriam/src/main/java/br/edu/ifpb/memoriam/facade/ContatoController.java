@@ -81,7 +81,7 @@ public class ContatoController {
 		return resultado;
 	}
 	
-	public Resultado editar(Map<String, String[]> parametros){
+	/*public Resultado editar(Map<String, String[]> parametros){
 		Resultado resultado= new Resultado();
 		String[] id =  parametros.get("id");
 		if(id != null && id.length > 0 && !id[0].isEmpty()) {
@@ -110,7 +110,7 @@ public class ContatoController {
 			resultado.setMensagensErro(this.mensagensErro);
 		}
 		return resultado;
-	}
+	}*/
 	public boolean isParametrosValidos(Map<String, String[]> parametros){
 		// nomes dos parâmetros vêm dos atributos 'name' das tags HTML do formulário
 		String[] id = parametros.get("id");
@@ -159,12 +159,11 @@ public class ContatoController {
 		
 		// Recupera a operadora selecionada, a partir do seu id
 		Operadora operadora= null;
-		if(idOperadora != null && idOperadora[0].isEmpty()) {
+		if(idOperadora != null && !idOperadora[0].isEmpty()) {
 			OperadoraDAO opDao = new OperadoraDAO(PersistenceUtil.getCurrentEntityManager());
 			operadora= opDao.find(Integer.parseInt(idOperadora[0]));
+			contato.setOperadora(operadora);
 		}
-		
-		contato.setOperadora(operadora);
 		
 		return this.mensagensErro.isEmpty();
 	}

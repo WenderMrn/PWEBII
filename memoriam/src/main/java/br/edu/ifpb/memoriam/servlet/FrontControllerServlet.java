@@ -25,7 +25,7 @@ public class FrontControllerServlet extends HttpServlet {
 		Resultado resultado= null;
 		String proxPagina= null;
 		String paginaErro= "controller.do?op=bcsctt";
-		String paginaBuscar= "controller.do?op=bcsctt";
+		String paginaBuscar= "controller.do?op=edtctt";
 		
 		this.getServletContext().removeAttribute("msgs");
 		
@@ -44,7 +44,7 @@ public class FrontControllerServlet extends HttpServlet {
 				request.setAttribute("contatos", contatos);
 				proxPagina= "contato/consulta.jsp";
 			break;
-			case "bcsctt":
+			case "edtctt":
 				resultado= contatoCtrl.buscar(request.getParameterMap());
 				if(!resultado.isErro()) {
 					proxPagina = "contato/cadastro.jsp";
@@ -83,7 +83,8 @@ public class FrontControllerServlet extends HttpServlet {
 		switch(operacao) {
 			case "cadctt":
 				resultado= contatoCtrl.cadastrar(request.getParameterMap());
-				if(!resultado.isErro()) {proxPagina = paginaSucesso;
+				if(!resultado.isErro()) {
+					proxPagina = paginaSucesso;
 					request.setAttribute("msgs", resultado.getMensagensSucesso());
 				} else{
 					request.setAttribute("contato", (Contato) resultado.getEntitade());
