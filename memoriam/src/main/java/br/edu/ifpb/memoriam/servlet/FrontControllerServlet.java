@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import antlr.collections.List;
 import br.edu.ifpb.memoriam.entity.Contato;
+import br.edu.ifpb.memoriam.entity.Operadora;
 import br.edu.ifpb.memoriam.facade.ContatoController;
+import br.edu.ifpb.memoriam.facade.OperadoraController;
 import br.edu.ifpb.memoriam.facade.Resultado;
 
 @WebServlet("/controller.do")
@@ -21,7 +23,8 @@ public class FrontControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		ContatoController contatoCtrl = new ContatoController();
-		
+		OperadoraController operadoraCtrl = new OperadoraController();
+
 		Resultado resultado= null;
 		String proxPagina= null;
 		String paginaErro= "controller.do?op=bcsctt";
@@ -54,7 +57,23 @@ public class FrontControllerServlet extends HttpServlet {
 					request.setAttribute("msgs", resultado.getMensagensErro());
 					proxPagina= paginaErro;
 				}
-			break;	
+			break;
+			case "conoper":
+				java.util.List<Operadora> operadoras = operadoraCtrl.consultar();
+				request.setAttribute("operadoras", operadoras);
+				proxPagina= "operadora/consulta.jsp";
+			break;
+			case "edtopera":
+				resultado= operadoraCtrl.buscar(request.getParameterMap());
+				if(!resultado.isErro()) {
+					proxPagina = "operadora/cadastro.jsp";
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+					request.setAttribute("operadora", (Operadora) resultado.getEntitade());
+				} else{
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					paginaErro = proxPagina;
+				}
+			break;
 			default:
 				proxPagina= "../index.jsp";
 			
@@ -75,6 +94,8 @@ public class FrontControllerServlet extends HttpServlet {
 			return;
 		}
 		ContatoController contatoCtrl= new ContatoController();
+		OperadoraController operadoraCtrl = new OperadoraController();
+		
 		Resultado resultado= null;
 		String paginaSucesso= "controller.do?op=conctt";
 		String paginaErro= "contato/cadastro.jsp";
@@ -101,6 +122,28 @@ public class FrontControllerServlet extends HttpServlet {
 					request.setAttribute("contato", (Contato) resultado.getEntitade());
 					request.setAttribute("msgs", resultado.getMensagensErro());
 					proxPagina= paginaErro;
+				}
+			break;
+			case "cadopera":
+				resultado= operadoraCtrl.cadastrar(request.getParameterMap());
+				if(!resultado.isErro()) {
+					proxPagina = "controller.do?op=conoper";
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+				} else{
+					request.setAttribute("operadora", (Operadora) resultado.getEntitade());
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					proxPagina= "operadora/cadastro.jsp";
+				}
+			break;
+			case "excopera":
+				resultado= operadoraCtrl.excluir(request.getParameterMap());
+				if(!resultado.isErro()) {
+					proxPagina = "controller.do?op=conoper";
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+				} else{
+					request.setAttribute("operadora", (Operadora) resultado.getEntitade());
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					proxPagina= "controller.do?op=conoper";
 				}
 			break;
 			default:

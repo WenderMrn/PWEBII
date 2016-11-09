@@ -13,24 +13,20 @@
 		<div class="jumbotron">
 			<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
 			<form action="${pageContext.request.contextPath}/controller.do" method="POST">
-				<input type="hidden"name="op" value="excctt">
+				<input type="hidden"name="op" value="excopera">
 				<table>
 					<tr align="left">
 						<th></th>
-						<th style="width: 30%">Nome</th>
-						<th>Telefone</th>
-						<th><a href="${pageContext.request.contextPath}/controller.do?op=conoper">Operadora</a></th>
+						<th>Operadora</th>
 					</tr>
-					<c:forEach var="contato" items="${contatos}">
+					<c:forEach var="operadora" items="${operadoras}">
 						<tr align="left">
-							<td><input type="checkbox" value="${contato.id}" name="contatos[]" class="contatos-check"/></td><td><a href="controller.do?op=edtctt&id=${contato.id}">${contato.nome}</a></td>
-							<td>${contato.fone}</td>
-							<td>${contato.operadora.nome}</td>
+							<td><input type="checkbox" value="${operadora.id}" name="operadoras[]" class="operadoras-check"/></td><td><a href="controller.do?op=edtopera&id=${operadora.id}" style="margin-left: 10px;">${operadora.nome}</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			<button type="submit" class="form-control btn btn-danger" id="btn-excluir">Excluir</button>
-			<a href="contato/cadastro.jsp" class="form-control btn btn-primary">Novo</a>
+			<a href="${pageContext.request.contextPath}/operadora/cadastro.jsp"class="form-control btn btn-primary">Nova</a>
 			</form>
 		</div>
 	</div>	
@@ -39,8 +35,8 @@
 <script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
 <script> 
 $("#btn-excluir").hide();
-$(".contatos-check").on( "click",function(){
-	var n = $( ".contatos-check:checked" ).length;
+$(".operadoras-check").on( "click",function(){
+	var n = $( ".operadoras-check:checked" ).length;
 	if(n > 0){
 		$("#btn-excluir").show();	
 	}else{

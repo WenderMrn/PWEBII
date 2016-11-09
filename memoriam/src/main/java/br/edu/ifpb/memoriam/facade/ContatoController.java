@@ -83,9 +83,7 @@ public class ContatoController {
 				dao.beginTransaction();
 				Contato c = dao.find(this.contato.getId());
 				if(c!= null){
-					this.contato.setNome(c.getNome());
-					this.contato.setFone(c.getFone());
-					this.contato.setDataAniversario(c.getDataAniversario());
+					this.contato = c;
 				}
 				dao.commit();
 				resultado.setErro(false);
