@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<div class="jumbotron">
-			<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
+			<h2><a href="${pageContext.request.contextPath}/controller.do?op=conctt}"><i class="glyphicon glyphicon-phone"></i>Memoriam</a></h2>
 			<h3>Dados do da Operadora</h3>
 			<c:if test="${not empty msgs}">
 				<div align="left">

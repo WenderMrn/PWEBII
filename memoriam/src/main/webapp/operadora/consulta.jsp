@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<div class="jumbotron">
-			<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
+			<h2><a href="${pageContext.request.contextPath}/controller.do?op=conctt"><i class="glyphicon glyphicon-phone"></i>Memoriam</a></h2>
 			<form action="${pageContext.request.contextPath}/controller.do" method="POST">
 				<input type="hidden"name="op" value="excopera">
 				<table>
