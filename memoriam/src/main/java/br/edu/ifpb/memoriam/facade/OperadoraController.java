@@ -52,19 +52,33 @@ public class OperadoraController {
 		String[] idoperadoras = parametros.get("operadoras[]");
 		
 		if(idoperadoras != null && idoperadoras.length > 0 && !idoperadoras[0].isEmpty()) {
-			OperadoraDAO dao = new OperadoraDAO(PersistenceUtil.getCurrentEntityManager());
-			dao.beginTransaction();
+			OperadoraDAO daooperadora = new OperadoraDAO(PersistenceUtil.getCurrentEntityManager());
+			ContatoDAO daocontato = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
+			
 			resultado.setErro(false);
 			for (String id : idoperadoras) {
-				Operadora c = dao.find(Integer.parseInt(id));
-				if(c!=null){
-					dao.delete(c);
+				daooperadora.beginTransaction();
+				Operadora op = daooperadora.find(Integer.parseInt(id));
+				daooperadora.commit();
+				if(op!=null){
+					daocontato.beginTransaction();
+					List<Contato> contatos = daocontato.findAll();
+					for(Contato c:contatos){
+						if(c.getOperadora() == op){
+							c.setOperadora(null);
+							daocontato.update(c);
+						}
+					}
+					daocontato.commit();
+					
+					daooperadora.beginTransaction();
+					daooperadora.delete(op);
+					daooperadora.commit();
 				}else{
 					resultado.setErro(true);
 					resultado.setMensagensErro(Collections.singletonList("Operadora(s)  não encontrado(s)!"));
 				}
 			}
-			dao.commit();
 		}
 		return resultado;
 	}
