@@ -29,7 +29,7 @@
 				<input type="hidden"name="op" value="cadctt">
 				<input id="nome" value="${requestScope.contato.nome}" name="nome"type="text" class="form-control" placeholder="Nome"/>
 				<input id="fone" value="${requestScope.contato.fone}"name="fone"class="form-control" type="text" placeholder="Fone"/>
-				<fmt:formatDate var="dataAniv" value="${requestScope.contato.dataAniversario}" pattern="yyyy-MM-dd"/>
+				<fmt:formatDate var="dataAniv" value="${requestScope.contato.dataAniversario}" pattern="dd/mm/yyyy"/>
 				<input id="dataaniv" value="${dataAniv}" name="dataaniv" class="form-control" type="date" placeholder="Data de criação (dd/mm/aaaa)"/>
 				<select class="form-control" id="operadora" name="operadora">
 					<option value="${null}" label="Selecione a operadora">Selecione a operadora</option>
@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<c:set var="endofconversation" value="true" scope="request"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

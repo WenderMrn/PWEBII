@@ -92,6 +92,17 @@ public class FrontControllerServlet extends HttpServlet {
 					proxPagina= paginaErro;
 				}
 			break;
+			case "excctt":
+				resultado= contatoCtrl.excluir(request.getParameterMap());
+				if(!resultado.isErro()) {
+					proxPagina = paginaSucesso;
+					request.setAttribute("msgs", resultado.getMensagensSucesso());
+				} else{
+					request.setAttribute("contato", (Contato) resultado.getEntitade());
+					request.setAttribute("msgs", resultado.getMensagensErro());
+					proxPagina= paginaErro;
+				}
+			break;
 			default:
 				request.setAttribute("erro", "Operação não especificada no servlet!");
 				proxPagina= "../erro/erro.jsp";

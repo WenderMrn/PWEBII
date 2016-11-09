@@ -50,6 +50,28 @@ public class ContatoController {
 		return resultado;
 	}
 	
+	public Resultado excluir(Map<String, String[]> parametros){
+		Resultado resultado= new Resultado();
+		String[] idcontatos = parametros.get("contatos[]");
+		
+		if(idcontatos != null && idcontatos.length > 0 && !idcontatos[0].isEmpty()) {
+			ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
+			dao.beginTransaction();
+			resultado.setErro(false);
+			for (String id : idcontatos) {
+				Contato c = dao.find(Integer.parseInt(id));
+				if(c!=null){
+					dao.delete(c);
+				}else{
+					resultado.setErro(true);
+					resultado.setMensagensErro(Collections.singletonList("Contato(s)  não encontrado(s)!"));
+				}
+			}
+			dao.commit();
+		}
+		return resultado;
+	}
+	
 	public Resultado buscar(Map<String, String[]> parametros){
 		Resultado resultado= new Resultado();
 		isParametrosValidos(parametros);
@@ -80,37 +102,6 @@ public class ContatoController {
 		}
 		return resultado;
 	}
-	
-	/*public Resultado editar(Map<String, String[]> parametros){
-		Resultado resultado= new Resultado();
-		String[] id =  parametros.get("id");
-		if(id != null && id.length > 0 && !id[0].isEmpty()) {
-			ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
-			
-				if(this.contato.getId() != null) {
-					dao.beginTransaction();
-					 Contato c = dao.find(this.contato.getId());
-					if(isParametrosValidos(parametros)){
-						c.setNome(this.contato.getNome());
-						c.setFone(this.contato.getFone());
-						c.setDataAniversario(this.contato.getDataAniversario());
-						dao.update(c);
-					}
-					dao.commit();
-					resultado.setErro(false);
-					resultado.setMensagensErro(Collections.singletonList("Contato alterado com sucesso"));
-				}else{
-					resultado.setErro(true);
-					resultado.setMensagensErro(Collections.singletonList("Contato não encontrado!"));
-				}			
-						
-		}else{
-			resultado.setEntitade(this.contato);
-			resultado.setErro(true);
-			resultado.setMensagensErro(this.mensagensErro);
-		}
-		return resultado;
-	}*/
 	public boolean isParametrosValidos(Map<String, String[]> parametros){
 		// nomes dos parâmetros vêm dos atributos 'name' das tags HTML do formulário
 		String[] id = parametros.get("id");
@@ -141,8 +132,17 @@ public class ContatoController {
 		if(dataAniv == null|| dataAniv.length == 0 || dataAniv[0].isEmpty()) {
 			this.mensagensErro.add("Data de aniversário é campo obrigatório!");
 		} else{
-			
-			if(dataAniv[0].matches("(19|20)\\d{2,2}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])")) {
+			if(dataAniv[0].matches("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2,2}")) {
+				try{
+					SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+					sdf.setLenient(false);
+					Date dataIni= sdf.parse(dataAniv[0]);
+					contato.setDataAniversario(dataIni);
+				} catch(ParseException e){
+					this.mensagensErro.add("Data inválida para a data de aniversário!");
+				}
+			}else if(dataAniv[0].matches("(19|20)\\d{2,2}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])")) {
+				/* validação para o chrome */
 				try{
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					sdf.setLenient(false);
