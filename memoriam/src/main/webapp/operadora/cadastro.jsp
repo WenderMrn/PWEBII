@@ -27,6 +27,7 @@
 			</c:if>
 			<form action="${pageContext.request.contextPath}/controller.do" method="POST" class="form-horizontal">
 				<input type="hidden"name="op" value="cadopera">
+				<input type="hidden"name="id" value="${requestScope.operadora.id}">
 				<input id="nome" value="${requestScope.operadora.nome}" name="nome"type="text" class="form-control" placeholder="Nome"/>
 				<input type="submit" class="form-control btn btn-primary" value="Salvar">
 			</form>
