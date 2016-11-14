@@ -23,20 +23,21 @@
 		    <div class="collapse navbar-collapse" id="myNavbar">
 		      <ul class="nav navbar-nav">
 		        <li class="active"><a href="#">Catálogo</a></li>
-		        <li><a href="#">Resumo</a></li>
-		        <li><a href="#">Gallery</a></li>
-		        <li><a href="#">Contact</a></li>
+		        <li><a href="${pageContext.request.contextPath}/resumo?op=resumir">Resumo</a></li>
+		        <li><a href="#">Finalizar</a></li>
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
-		      	<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> ${fn:length(carrinho.itemsCarrinho)}</a></li>
+		      <c:if test="${fn:length(carrinho.itemsCarrinho) > 0}">
+		      	<li><a href="${pageContext.request.contextPath}/resumo?op=resumir"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge">${fn:length(carrinho.itemsCarrinho)}</span></a></li>
+		      </c:if>	
 		       <!--   <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
 		      </ul>
 		    </div>
 		  </div>
-		</nav>
+	</nav>
 	<div class="container">
 		<div class="jumbotron text-center">
-			<h1>Catálogo de Produtos</h1>	
+			<h1>Catálogo de Produtos</h1>
 			<table class="table table-hover">
 				<tr>
 					<th></th><th>Nome</th><th>Descrição</th><th>Preço</th>		
@@ -44,7 +45,7 @@
 				<c:forEach var="item" items="${catalogo}">
 					<tr align="left">
 						<td>
-							<a href="${pageContext.request.contextPath}/pedido?op=adicionar&id=${item.itemID}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign"></span> Adicionar</a>
+							<a href="${pageContext.request.contextPath}/pedido?op=adicionar&id=${item.itemID}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus-sign"></span> Adicionar</a>
 						</td>
 						<td>${item.descricaoCurta}</td>
 						<td>${item.descricaoLonga}</td>
