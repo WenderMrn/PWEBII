@@ -25,7 +25,7 @@ public class ListaCatalogoServlet extends HttpServlet {
 			items = Catalogo.getItems();
 		}
 		request.setAttribute("catalogo", items);
-		RequestDispatcher dispatcher= request.getRequestDispatcher("index.jsp");
+		RequestDispatcher dispatcher= request.getRequestDispatcher("catalogo/listar.jsp");
 		dispatcher.forward(request, response);
 	}
 
