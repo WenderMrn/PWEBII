@@ -21,6 +21,9 @@
 			    <div><b>qtde:</b> ${itemc.numItens} / <b>vl unit:</b> R$ ${itemc.precoUnitario}</div>
 			  </li>
 			  </c:forEach>
+			  <li class="list-group-item" style="background-color: #c3c3c3;color: white;"><span class="badge">R$ 200.00</span>
+			    <span><b>Total </b></span>
+			  </li>
 			</ul>
 			<form>
 			<div class="row">
@@ -85,14 +88,6 @@
 						  	</div>
 					  	</div>
 					</div>	
-			      </div>
-			      <div class="col-xs-3 col-sm-3 text-center" style="font-size: 50px;">
-			        <div class="row">
-			        	<div>Total</div>	
-			        </div>
-			        <div class="row">
-			        	<div> R$ 20.00</div>	
-			        </div>	
 			      </div>
 			    </div>
 			  </div>
