@@ -1,6 +1,7 @@
 package br.edu.ifpb.servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +37,12 @@ public class ResumoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String operacao= request.getParameter("op");
 		
+		if(operacao.equals("finalizar")){
+			Map<String, String[]> parametros = request.getParameterMap();
+			System.out.println("a");
+		}
 	}
 
 }
