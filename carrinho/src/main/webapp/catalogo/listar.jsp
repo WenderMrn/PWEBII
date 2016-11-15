@@ -25,7 +25,6 @@
 		        <li class="active"><a href="#">Catálogo</a></li>
 		         <c:if test="${fn:length(carrinho.itemsCarrinho) > 0}">
 			      	<li><a href="${pageContext.request.contextPath}/resumo?op=resumir">Resumo</a></li>
-			        <li><a href="${pageContext.request.contextPath}/finaliza?op=finalizar">Finalizar</a></li>
 		      	</c:if>
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
