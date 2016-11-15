@@ -12,8 +12,9 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1 class="text-center">Resumo da compra</h1>	
+			<form action="${pageContext.request.contextPath}/finaliza?op=finalizar" method="POST">
 			<ul class="list-group">
-			<c:set var="totalGeral" scope="request" value="${0}"/>
+			<c:set var="totalGeral" scope="request" value="${0}"/>	
 			<c:forEach var="itemc" items="${carrinho.itemsCarrinho}">
 				<c:set var="totalGeral" scope="request" value="${totalGeral + itemc.precoTotal}"/>		
 				  <li class="list-group-item">
@@ -33,7 +34,6 @@
 			    <span><b>Valor Total</b></span>
 			  </li>
 			</ul>
-			<form action="${pageContext.request.contextPath}/resumo?op=finalizar" method="POST">
 			<div class="row">
 				<div class="col-md-4">
 					<h4>Forma de envio</h4>
@@ -108,21 +108,23 @@
 	</div>	
 	<script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
 	<script>
-		var total = "<c:out value='${totalGeral}'/>";
-		var adicional = 0;
 		
 		$( "#forma-envio" ).change(function() {
+			var adicional = 0;
 			var forma = $(this).val();
 			var total = "<c:out value='${totalGeral}'/>";
+			
 			if(forma == "eco"){
 				adicional = Number(total) * 0.02;
-				total = Number(total)+ adicional;
+				total = Number(total) + adicional;
 			}else{
-				adicional = 25 + Number(total) * 0.08;
+				adicional = 25 + (Number(total) * 0.02);
 				total = Number(total)+adicional;
 			}
+	
 			$("#impostos").html("R$ "+adicional.toFixed(2));
-			$("#totalgeral").html("R$ "+(Number(total)+ adicional).toFixed(2));
+			$("#totalgeral").html("R$ "+Number(total).toFixed(2));
+			
 			$("#p_impostos").val($("#impostos").html());
 			$("#p_totalgeral").val($("#totalgeral").html());
 			
