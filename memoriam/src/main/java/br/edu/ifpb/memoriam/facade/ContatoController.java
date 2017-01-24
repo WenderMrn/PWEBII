@@ -40,11 +40,11 @@ public class ContatoController {
 			
 			dao.commit();
 			resultado.setErro(false);
-			resultado.setMensagensErro(Collections.singletonList("Contato criado com sucesso"));
+			resultado.addMensagens(Collections.singletonList("Contato criado com sucesso"),Categoria.INFO);
 		}else{
-			resultado.setEntitade(this.contato);
+			resultado.setEntidade(this.contato);
 			resultado.setErro(true);
-			resultado.setMensagensErro(this.mensagensErro);
+			resultado.addMensagens(this.mensagensErro,Categoria.ERRO);
 			
 		}
 		return resultado;
@@ -64,7 +64,7 @@ public class ContatoController {
 					dao.delete(c);
 				}else{
 					resultado.setErro(true);
-					resultado.setMensagensErro(Collections.singletonList("Contato(s)  não encontrado(s)!"));
+					resultado.addMensagens(Collections.singletonList("Contato(s)  não encontrado(s)!"),Categoria.ERRO);
 				}
 			}
 			dao.commit();
@@ -87,16 +87,16 @@ public class ContatoController {
 				}
 				dao.commit();
 				resultado.setErro(false);
-				resultado.setEntitade(this.contato);
+				resultado.setEntidade(this.contato);
 			}else{
 				resultado.setErro(true);
-				resultado.setMensagensErro(Collections.singletonList("Contato não encontrado!"));
+				resultado.addMensagens(Collections.singletonList("Contato não encontrado!"),Categoria.AVISO);
 			}			
 				
 		}else{
 		
 			resultado.setErro(true);
-			resultado.setMensagensErro(this.mensagensErro);
+			resultado.addMensagens(this.mensagensErro,Categoria.ERRO);
 		}
 		return resultado;
 	}

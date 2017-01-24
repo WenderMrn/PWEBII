@@ -37,11 +37,11 @@ public class OperadoraController {
 			
 			dao.commit();
 			resultado.setErro(false);
-			resultado.setMensagensErro(Collections.singletonList("Operadora criada com sucesso"));
+			resultado.addMensagens(Collections.singletonList("Operadora criada com sucesso"),Categoria.INFO);
 		}else{
-			resultado.setEntitade(this.operadora);
+			resultado.setEntidade(this.operadora);
 			resultado.setErro(true);
-			resultado.setMensagensErro(this.mensagensErro);
+			resultado.addMensagens(this.mensagensErro,Categoria.ERRO);
 			
 		}
 		return resultado;
@@ -76,7 +76,7 @@ public class OperadoraController {
 					daooperadora.commit();
 				}else{
 					resultado.setErro(true);
-					resultado.setMensagensErro(Collections.singletonList("Operadora(s)  não encontrado(s)!"));
+					resultado.addMensagens(Collections.singletonList("Operadora(s)  não encontrado(s)!"),Categoria.AVISO);
 				}
 			}
 		}
@@ -98,16 +98,16 @@ public class OperadoraController {
 				}
 				dao.commit();
 				resultado.setErro(false);
-				resultado.setEntitade(this.operadora);
+				resultado.setEntidade(this.operadora);
 			}else{
 				resultado.setErro(true);
-				resultado.setMensagensErro(Collections.singletonList("Contato não encontrado!"));
+				resultado.addMensagens(Collections.singletonList("Contato não encontrado!"),Categoria.INFO);
 			}			
 				
 		}else{
 		
 			resultado.setErro(true);
-			resultado.setMensagensErro(this.mensagensErro);
+			resultado.addMensagens(this.mensagensErro,Categoria.ERRO);
 		}
 		return resultado;
 	}
