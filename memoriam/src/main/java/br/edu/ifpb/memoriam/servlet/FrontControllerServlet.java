@@ -105,7 +105,7 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		Resultado resultado= null;
 		String paginaSucesso= "controller.do?op=conctt";
-		String paginaErro= "login/login.jsp";;
+		String paginaErro= "../erro/erro.jsp";
 		String proxPagina= null;
 		
 		HttpSession session= request.getSession();
@@ -115,6 +115,7 @@ public class FrontControllerServlet extends HttpServlet {
 			case"login":
 				LoginController loginCtrl= new LoginController();
 				paginaSucesso= "controller.do?op=conctt";
+				paginaErro = "login/login.jsp";
 				resultado= loginCtrl.isValido(request.getParameterMap());
 				if(resultado.isErro()) {
 					request.setAttribute("msgs", resultado.getMensagens());
@@ -123,6 +124,11 @@ public class FrontControllerServlet extends HttpServlet {
 					session.setAttribute("usuario", (Usuario) resultado.getEntidade());
 					proxPagina= paginaSucesso;
 				}break;
+			case"logout":
+				proxPagina = "login/login.jsp";
+				session.invalidate();
+				resultado.setErro(false);
+			break;	
 			case "cadctt":
 				resultado= contatoCtrl.cadastrar(request.getParameterMap());
 				if(!resultado.isErro()) {
@@ -131,7 +137,7 @@ public class FrontControllerServlet extends HttpServlet {
 				} else{
 					request.setAttribute("contato", (Contato) resultado.getEntidade());
 					request.setAttribute("msgs", resultado.getMensagens());
-					proxPagina= paginaErro;
+					proxPagina= "contato/cadastro.jsp";
 				}
 			break;
 			case "excctt":

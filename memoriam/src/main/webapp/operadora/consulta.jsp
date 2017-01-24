@@ -9,6 +9,28 @@
 <link href="${pageContext.request.contextPath}/assets/css/memoriam.css" rel="stylesheet">
 </head>
 <body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div id="navbar">
+				<c:if test="${perfil eq 'ADMIN'}">
+					<ul class="nav navbar-nav">
+						<li><a href="${pageContext.request.contextPath}/controller.do?op=conctt">Contatos</a></li>
+						<li><a href="${pageContext.request.contextPath}/controller.do?op=conoper">Operadoras</a></li>
+					</ul>
+				</c:if>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.usuario.nome}<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id="link-submit">Sair</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">${sessionScope.usuario.perfil}</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<div class="container">
 		<div class="jumbotron">
 			<h2><a href="${pageContext.request.contextPath}/controller.do?op=conctt"><i class="glyphicon glyphicon-phone"></i>Memoriam</a></h2>
@@ -31,8 +53,8 @@
 		</div>
 	</div>	
 </body>
-</html>
 <script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 <script> 
 $("#btn-excluir").hide();
 $(".operadoras-check").on( "click",function(){
@@ -43,4 +65,9 @@ $(".operadoras-check").on( "click",function(){
 		$("#btn-excluir").hide();
 	}
 });
-</script>	
+var form = document.getElementById("logout-form");
+document.getElementById("link-submit").addEventListener("click", function() {
+	form.submit();
+});
+</script>
+</html>	

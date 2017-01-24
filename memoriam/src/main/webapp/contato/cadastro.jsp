@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="mm" tagdir="/WEB-INF/tags/messages"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,17 +15,7 @@
 		<div class="jumbotron">
 			<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
 			<h3>Dados do Contato</h3>
-			<c:if test="${not empty msgs}">
-				<div align="left">
-					<div style="color: red">
-						<ul style="padding-left:0px;">
-							<c:forEach var="msg" items="${msgs}">
-								<li style="list-style-type: none;">${msg}</li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
-			</c:if>
+			<mm:messages value="${msgs}" erroStyle="color:red" infoStyle="color:blue"/>
 			<form action="${pageContext.request.contextPath}/controller.do" method="POST" class="form-horizontal">
 				<input type="hidden"name="op" value="cadctt">
 				<input type="hidden"name="id" value="${requestScope.contato.id}">
