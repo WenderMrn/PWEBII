@@ -17,11 +17,14 @@
 			<h2 class="form-signin-heading">Memoriam<i class="glyphicon glyphicon-phone"></i></h2>
 			<div class="form-group">
 				<label for="inputEmail" class="sr-only">Usuário</label>
-				<input type="email" name="login" id="login" class="form-control" placeholder="Email" requiredautofocus>
+				<input type="email" name="login" id="login" class="form-control" placeholder="Email" requiredautofocus value="${cookie['loginCookie'].value}">
 			</div>
 			<div class="form-group">	
 				<label for="inputPassword"class="sr-only">Senha</label>
 				<input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
+			</div>
+			<div class="checkbox">
+				<label><input type="checkbox" value="sim" id="lembrar" name="lembrar">Lembrar-me</label>
 			</div>	
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 			<mm:messages value="${msgs}" erroStyle="color:red" infoStyle="color:blue"/>

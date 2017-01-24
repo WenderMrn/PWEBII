@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -121,9 +122,27 @@ public class FrontControllerServlet extends HttpServlet {
 					request.setAttribute("msgs", resultado.getMensagens());
 					proxPagina= paginaErro;
 				}else{
-					session.setAttribute("usuario", (Usuario) resultado.getEntidade());
 					proxPagina= paginaSucesso;
-				}break;
+					Usuario usuarioLogado = (Usuario) resultado.getEntidade();
+					session.setAttribute("usuario",usuarioLogado);
+					// trata o lembrar
+					String lembrar= request.getParameter("lembrar");
+					if(lembrar!= null) {
+						Cookie c= new Cookie("loginCookie", usuarioLogado.getEmail());
+						c.setMaxAge(-1);
+						response.addCookie(c);
+					} else{
+						for(Cookie cookie: request.getCookies()) {
+							if(cookie.getName().equals("loginCookie")) {
+								cookie.setValue(null);
+								cookie.setMaxAge(0);
+								response.addCookie(cookie);	
+							}
+						}
+					
+					}
+				}
+				break;
 			case"logout":
 				proxPagina = "login/login.jsp";
 				resultado.setErro(false);
