@@ -126,8 +126,8 @@ public class FrontControllerServlet extends HttpServlet {
 				}break;
 			case"logout":
 				proxPagina = "login/login.jsp";
-				session.invalidate();
 				resultado.setErro(false);
+				session.invalidate();
 			break;	
 			case "cadctt":
 				resultado= contatoCtrl.cadastrar(request.getParameterMap());
