@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +33,18 @@ public class Usuario implements Serializable {
 	@Column(name="ST_ATIVO")
 	private Boolean ativo;
 	
+	@Column(name="TP_PERFIL")
+	@Enumerated(EnumType.STRING)
+	private Perfil perfil;
+	
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
 	public String getPrenome() {
 		return  (this.nome != null) ? this.nome.split(" ")[0].trim() : null;
 	}

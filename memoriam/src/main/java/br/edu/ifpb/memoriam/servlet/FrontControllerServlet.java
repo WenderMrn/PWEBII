@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import antlr.collections.List;
 import br.edu.ifpb.memoriam.entity.Contato;
@@ -42,10 +43,13 @@ public class FrontControllerServlet extends HttpServlet {
 			return;
 		}
 		
+		HttpSession session= request.getSession();
+		Usuario usuario= (Usuario) session.getAttribute("usuario");
+		
 		switch(operacao) {
 		
 			case "conctt":
-				java.util.List<Contato> contatos = contatoCtrl.consultar();
+				java.util.List<Contato> contatos = contatoCtrl.consultar(usuario);
 				request.setAttribute("contatos", contatos);
 				proxPagina= "contato/consulta.jsp";
 			break;
@@ -101,8 +105,11 @@ public class FrontControllerServlet extends HttpServlet {
 		
 		Resultado resultado= null;
 		String paginaSucesso= "controller.do?op=conctt";
-		String paginaErro= "contato/cadastro.jsp";
+		String paginaErro= "login/login.jsp";;
 		String proxPagina= null;
+		
+		HttpSession session= request.getSession();
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		
 		switch(operacao) {
 			case"login":
@@ -111,9 +118,9 @@ public class FrontControllerServlet extends HttpServlet {
 				resultado= loginCtrl.isValido(request.getParameterMap());
 				if(resultado.isErro()) {
 					request.setAttribute("msgs", resultado.getMensagens());
-					proxPagina= "../index.jsp";
+					proxPagina= paginaErro;
 				}else{
-					//session.setAttribute("usuario", (Usuario) resultado.getEntidade());
+					session.setAttribute("usuario", (Usuario) resultado.getEntidade());
 					proxPagina= paginaSucesso;
 				}break;
 			case "cadctt":

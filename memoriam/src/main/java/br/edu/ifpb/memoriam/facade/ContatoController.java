@@ -13,15 +13,16 @@ import br.edu.ifpb.memoriam.dao.OperadoraDAO;
 import br.edu.ifpb.memoriam.dao.PersistenceUtil;
 import br.edu.ifpb.memoriam.entity.Contato;
 import br.edu.ifpb.memoriam.entity.Operadora;
+import br.edu.ifpb.memoriam.entity.Usuario;
 
 public class ContatoController {
 	
 	private Contato contato;
 	private List<String> mensagensErro;
 	
-	public List<Contato> consultar(){
-		ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
-		List<Contato> contatos= dao.findAll();
+	public List<Contato> consultar(Usuario usuario){
+		ContatoDAO dao= new ContatoDAO();
+		List<Contato> contatos= dao.findAllFromUser(usuario);
 		return contatos;
 	}
 	

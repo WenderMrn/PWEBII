@@ -17,7 +17,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Integer> {
 	}
 
 	public Usuario findByLogin(String login) {
-		Query q = this.getEntityManager().createQuery("select u from Usuario u where u.email = :login");
+		Query q = this.getEntityManager().createQuery("from Usuario u where u.email = :login");
         q.setParameter("login", login);
         Usuario u = null;
         try {
