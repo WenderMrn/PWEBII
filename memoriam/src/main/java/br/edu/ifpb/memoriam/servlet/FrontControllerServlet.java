@@ -135,7 +135,7 @@ public class FrontControllerServlet extends HttpServlet {
 						for(Cookie cookie: request.getCookies()) {
 							if(cookie.getName().equals("loginCookie")) {
 								cookie.setValue(null);
-								cookie.setMaxAge(-1);
+								cookie.setMaxAge(0);
 								response.addCookie(cookie);	
 							}
 						}

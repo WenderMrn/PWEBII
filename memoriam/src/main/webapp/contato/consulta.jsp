@@ -32,7 +32,7 @@
 							<th></th>
 							<th style="width: 30%">Nome</th>
 							<th>Telefone</th>
-							<th><a href="${pageContext.request.contextPath}/controller.do?op=conoper">Operadora</a></th>
+							<th>>Operadora</th>
 						</tr>
 						<c:forEach var="contato" items="${contatos}">
 							<tr align="left">
