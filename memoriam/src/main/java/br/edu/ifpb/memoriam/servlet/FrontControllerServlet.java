@@ -127,15 +127,15 @@ public class FrontControllerServlet extends HttpServlet {
 					session.setAttribute("usuario",usuarioLogado);
 					// trata o lembrar
 					String lembrar= request.getParameter("lembrar");
-					if(lembrar!= null) {
+					if(lembrar != null) {
 						Cookie c= new Cookie("loginCookie", usuarioLogado.getEmail());
-						c.setMaxAge(-1);
+						c.setMaxAge(3600*60);
 						response.addCookie(c);
 					} else{
 						for(Cookie cookie: request.getCookies()) {
 							if(cookie.getName().equals("loginCookie")) {
 								cookie.setValue(null);
-								cookie.setMaxAge(0);
+								cookie.setMaxAge(-1);
 								response.addCookie(cookie);	
 							}
 						}
@@ -145,6 +145,7 @@ public class FrontControllerServlet extends HttpServlet {
 				break;
 			case"logout":
 				proxPagina = "login/login.jsp";
+				resultado = new Resultado();
 				resultado.setErro(false);
 				session.invalidate();
 			break;	

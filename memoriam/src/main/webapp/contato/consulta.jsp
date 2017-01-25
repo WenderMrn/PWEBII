@@ -4,8 +4,6 @@
 <%@taglib prefix="mm" tagdir="/WEB-INF/tags/messages"%>
 <tt:template title="Consultaa contatos">
 	<jsp:attribute name="tscript">
-		<script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 		<script> 
 		$("#btn-excluir").hide();
 		$(".contatos-check").on( "click",function(){

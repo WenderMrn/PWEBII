@@ -24,5 +24,7 @@
 			<jsp:doBody/>
 		</div>
 		<jsp:invoke fragment="tscript"/>
+			<script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
+			<script src="${pageContext.request.contextPath}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
