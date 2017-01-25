@@ -5,15 +5,6 @@
 <tt:template title="Memoriam">
 	<jsp:attribute name="tscript">
 		<script> 
-		$("#btn-excluir").hide();
-		$(".operadoras-check").on( "click",function(){
-			var n = $( ".operadoras-check:checked" ).length;
-			if(n > 0){
-				$("#btn-excluir").show();	
-			}else{
-				$("#btn-excluir").hide();
-			}
-		});
 		var form = document.getElementById("logout-form");
 		document.getElementById("link-submit").addEventListener("click", function() {
 			form.submit();
@@ -38,7 +29,8 @@
 						</c:forEach>
 					</table>
 				<button type="submit" class="form-control btn btn-danger" id="btn-excluir">Excluir</button>
-				<a href="${pageContext.request.contextPath}/operadora/cadastro.jsp"class="form-control btn btn-primary">Nova</a>
+				<a href="${pageContext.request.contextPath}/operadora/cadastro.jsp" class="form-control btn btn-primary">Nova</a>
+				<a href="${pageContext.request.contextPath}/controller.do?op=conctt" class="form-control btn btn-default">Voltar</a>
 				</form>
 			</div>
 		</div>	

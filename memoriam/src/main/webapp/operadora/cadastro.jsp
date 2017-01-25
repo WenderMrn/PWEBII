@@ -34,6 +34,7 @@
 				<input type="hidden"name="id" value="${requestScope.operadora.id}">
 				<input id="nome" value="${requestScope.operadora.nome}" name="nome"type="text" class="form-control" placeholder="Nome"/>
 				<input type="submit" class="form-control btn btn-primary" value="Salvar">
+					<a href="${pageContext.request.contextPath}/controller.do?op=conctt" class="form-control btn btn-default">Voltar</a>
 			</form>
 		</div>
 	</div>

@@ -21,19 +21,21 @@ public class ContatoController {
 	private List<String> mensagensErro;
 	
 	public List<Contato> consultar(Usuario usuario){
-		ContatoDAO dao= new ContatoDAO();
+		
+		ContatoDAO dao= new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
 		List<Contato> contatos= dao.findAllFromUser(usuario);
 		return contatos;
 	}
 	
-	public Resultado cadastrar(Map<String, String[]> parametros){
+	public Resultado cadastrar(Map<String, String[]> parametros,Usuario u){
 		Resultado resultado= new Resultado();
 		
-		if(isParametrosValidos(parametros)){
+		if(isParametrosValidos(parametros,u)){
 			ContatoDAO dao = new ContatoDAO(PersistenceUtil.getCurrentEntityManager());
 			dao.beginTransaction();
 			
 			if(this.contato.getId() == null) {
+				
 				dao.insert(this.contato);
 			} else{
 				dao.update(this.contato);
@@ -42,6 +44,7 @@ public class ContatoController {
 			dao.commit();
 			resultado.setErro(false);
 			resultado.addMensagens(Collections.singletonList("Contato criado com sucesso"),Categoria.INFO);
+			resultado.setEntidade(this.contato);
 		}else{
 			resultado.setEntidade(this.contato);
 			resultado.setErro(true);
@@ -75,7 +78,7 @@ public class ContatoController {
 	
 	public Resultado buscar(Map<String, String[]> parametros){
 		Resultado resultado= new Resultado();
-		isParametrosValidos(parametros);
+		isParametrosValidos(parametros,null);
 		
 		if(this.contato.getId() != null) {
 			
@@ -101,7 +104,7 @@ public class ContatoController {
 		}
 		return resultado;
 	}
-	public boolean isParametrosValidos(Map<String, String[]> parametros){
+	public boolean isParametrosValidos(Map<String, String[]> parametros,Usuario u){
 		// nomes dos parâmetros vêm dos atributos 'name' das tags HTML do formulário
 		String[] id = parametros.get("id");
 		String[] nome = parametros.get("nome");
@@ -110,6 +113,7 @@ public class ContatoController {
 		String[] idOperadora = parametros.get("operadora");
 		
 		this.contato = new Contato();
+		this.contato.setUsuario(u);
 		this.mensagensErro= new ArrayList<String>();
 		
 		if(id != null && id.length > 0 && !id[0].isEmpty()) {

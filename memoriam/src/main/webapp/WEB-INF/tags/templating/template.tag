@@ -26,5 +26,16 @@
 		<jsp:invoke fragment="tscript"/>
 			<script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery-3.1.1.min.js"></script>
 			<script src="${pageContext.request.contextPath}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+			<script>
+			$("#btn-excluir").hide();
+			$(".contatos-check").on( "click",function(){
+				var n = $( ".contatos-check:checked" ).length;
+				if(n > 0){
+					$("#btn-excluir").show();	
+				}else{
+					$("#btn-excluir").hide();
+				}
+			});
+			</script>	
 	</body>
 </html>

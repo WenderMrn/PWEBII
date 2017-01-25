@@ -5,15 +5,6 @@
 <tt:template title="Consultaa contatos">
 	<jsp:attribute name="tscript">
 		<script> 
-		$("#btn-excluir").hide();
-		$(".contatos-check").on( "click",function(){
-			var n = $( ".contatos-check:checked" ).length;
-			if(n > 0){
-				$("#btn-excluir").show();	
-			}else{
-				$("#btn-excluir").hide();
-			}
-		});
 		var form = document.getElementById("logout-form");
 		document.getElementById("link-submit").addEventListener("click", function() {
 			form.submit();
@@ -26,13 +17,13 @@
 				<h2><i class="glyphicon glyphicon-phone"></i>Memoriam</h2>
 				<mm:messages value="${msgs}" erroStyle="color:red" infoStyle="color:blue"/>
 				<form action="${pageContext.request.contextPath}/controller.do" method="POST">
-					<input type="hidden"name="op" value="excctt">
+					<input type="hidden" name="op" value="excctt">
 					<table>
 						<tr align="left">
 							<th></th>
-							<th style="width: 30%">Nome</th>
-							<th>Telefone</th>
-							<th>>Operadora</th>
+							<th style="width: 40%">Nome</th>
+							<th style="width: 30%">Telefone</th>
+							<th style="width: 30%">Operadora</th>
 						</tr>
 						<c:forEach var="contato" items="${contatos}">
 							<tr align="left">

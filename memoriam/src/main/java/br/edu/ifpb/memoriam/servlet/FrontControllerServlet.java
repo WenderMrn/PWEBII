@@ -150,7 +150,7 @@ public class FrontControllerServlet extends HttpServlet {
 				session.invalidate();
 			break;	
 			case "cadctt":
-				resultado= contatoCtrl.cadastrar(request.getParameterMap());
+				resultado= contatoCtrl.cadastrar(request.getParameterMap(),usuario);
 				if(!resultado.isErro()) {
 					proxPagina = paginaSucesso;
 					request.setAttribute("msgs", resultado.getMensagens());

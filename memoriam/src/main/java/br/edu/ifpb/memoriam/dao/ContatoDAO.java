@@ -19,9 +19,10 @@ public class ContatoDAO extends GenericDAO<Contato, Integer> {
 	}
 	
 	public List<Contato> findAllFromUser(Usuario usuario) {
-		Query q= this.getEntityManager().createQuery("from Contato c where c.usuario = :user");
+		Query q = this.getEntityManager().createQuery("from Contato c where c.usuario = :user");
 		q.setParameter("user", usuario);
-		return q.getResultList();}
+		return q.getResultList();
+	}
 
 	
 }
